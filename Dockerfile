@@ -8,8 +8,9 @@ CMD ["/sbin/entrypoint.sh"]
 ARG cachet_ver
 ARG archive_url
 
-ENV cachet_ver ${cachet_ver:-master}
-ENV archive_url ${archive_url:-https://github.com/cachethq/Cachet/archive/${cachet_ver}.tar.gz}
+ENV cachet_ver ${cachet_ver:-2.3}
+#ENV archive_url ${archive_url:-https://github.com/PiranhaTeam/Cachet/archive/${cachet_ver}.tar.gz}
+ENV git_url ${git_url:-https://github.com/PiranhaTeam/Cachet.git}
 
 ENV COMPOSER_VERSION 1.6.3
 
@@ -51,6 +52,7 @@ RUN apk add --no-cache --update \
     wget sqlite git curl bash grep \
     supervisor
 
+
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log && \
@@ -78,10 +80,11 @@ RUN wget https://getcomposer.org/installer -O /tmp/composer-setup.php && \
 WORKDIR /var/www/html/
 USER 1001
 
-RUN wget ${archive_url} && \
-    tar xzf ${cachet_ver}.tar.gz --strip-components=1 && \
+RUN ls -al &&\
+    pwd &&\
+    git clone --single-branch -b ${cachet_ver} ${git_url} . &&\
+    ls -al &&\
     chown -R www-data:root /var/www/html && \
-    rm -r ${cachet_ver}.tar.gz && \
     php /bin/composer.phar global require "hirak/prestissimo:^0.3" && \
     php /bin/composer.phar install --no-dev -o && \
     rm -rf bootstrap/cache/*
