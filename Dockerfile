@@ -8,7 +8,7 @@ CMD ["/sbin/entrypoint.sh"]
 ARG cachet_ver
 ARG archive_url
 
-ENV cachet_ver ${cachet_ver:-2.3}
+ENV cachet_ver ${cachet_ver:-nested-component-groups}
 #ENV archive_url ${archive_url:-https://github.com/PiranhaTeam/Cachet/archive/${cachet_ver}.tar.gz}
 ENV git_url ${git_url:-https://github.com/PiranhaTeam/Cachet.git}
 
