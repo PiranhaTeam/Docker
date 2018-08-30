@@ -8,11 +8,11 @@ CMD ["/sbin/entrypoint.sh"]
 ARG cachet_ver
 ARG archive_url
 
-ENV cachet_ver ${cachet_ver:-2.3}
+ENV cachet_ver ${cachet_ver:-2.4}
 #ENV archive_url ${archive_url:-https://github.com/PiranhaTeam/Cachet/archive/${cachet_ver}.tar.gz}
 ENV git_url ${git_url:-https://github.com/PiranhaTeam/Cachet.git}
 
-ENV COMPOSER_VERSION 1.6.3
+ENV COMPOSER_VERSION 1.7.2
 
 RUN apk add --no-cache --update \
     postgresql-client \
@@ -49,6 +49,8 @@ RUN apk add --no-cache --update \
     php7-zip \
     php7-zlib \
     php7-tokenizer \
+    php7-sqlite3 \
+    php7-xmlwriter \
     wget sqlite git curl bash grep \
     supervisor
 

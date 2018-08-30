@@ -202,8 +202,7 @@ initialize_system() {
 
 init_db() {
   echo "Initializing Cachet database ..."
-  php artisan app:install
-  check_configured
+  php artisan cachet:install
 }
 
 migrate_db() {
